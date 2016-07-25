@@ -1,0 +1,28 @@
+---
+# vim: set ts=2 sw=2 sts=2 et ai tw=79:
+# meta file for gocollect 
+
+galaxy_info:
+  author: Alex Boonstra 
+  description: Data collector using go, periodically posts json to a REST api
+  company: OSSO B.V. 
+  license: GNU
+  min_ansible_version: 1.0
+  platforms:
+  - name: Ubuntu 
+    versions:
+    - hardy
+    - karmic
+    - lucid
+    - precise
+    - trusty
+    - xenial
+  - name: Debian
+    - lenny 
+    - squeeze
+    - wheezy
+    - jessie
+  galaxy_tags:
+    - osso 
+    - go
+    - gocollect
