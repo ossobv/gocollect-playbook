@@ -12,4 +12,4 @@ example:
 
 TODO
 
-- add gocollect.conf and maintain it from playbook
+-
