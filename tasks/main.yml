@@ -37,3 +37,9 @@
     name=gocollect-hardware state=latest update_cache=yes cache_valid_time=3600
   when: ansible_virtualization_role=='host'
   tags: gocollect
+
+- name: make sure gocollect config is sane and up to date
+  template: src=gocollect.conf.j2 dest=/etc/gocollect.conf
+  notify:
+  - restart gocollect
+  tags: gocollect

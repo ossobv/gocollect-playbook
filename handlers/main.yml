@@ -1,0 +1,6 @@
+---
+# vim: set ts=2 sw=2 sts=2 et ai tw=79:
+# handlers file for gocollect
+
+- name: restart gocollect
+  service: name=gocollect state=restarted
