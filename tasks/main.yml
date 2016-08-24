@@ -20,8 +20,19 @@
 - name: Add GoCollect apt repository from osso-ppa
   apt_repository:
     repo: >
-        deb https://ppa.osso.nl/{{ ansible_os_family|lower }}
-        {{ ansible_lsb.codename|lower }} osso
+      deb http://ppa.osso.nl/{{ ansible_distribution|lower }}
+      {{ ansible_lsb.codename|lower }} osso
+    filename: osso-ppa
+    state: present
+    update_cache: no
+  tags: gocollect
+
+- name: Add GoCollect apt src repository from osso-ppa
+  apt_repository:
+    repo: >
+      deb-src http://ppa.osso.nl/{{ ansible_distribution|lower }}
+      {{ ansible_lsb.codename|lower }} osso
+    filename: osso-ppa
     state: present
   tags: gocollect
 
