@@ -3,4 +3,6 @@
 # handlers file for gocollect
 
 - name: restart gocollect
-  service: name=gocollect state=restarted
+  service:
+    name: gocollect
+    state: restarted
