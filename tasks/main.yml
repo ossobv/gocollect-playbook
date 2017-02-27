@@ -14,14 +14,16 @@
 # https://github.com/ossobv/gocollect
 
 - name: Add GoCollect apt repository key for osso-ppa
-  apt_key: url=https://ppa.osso.nl/support+ppa@osso.nl.gpg state=present
+  apt_key:
+    url: https://ppa.osso.nl/support+ppa@osso.nl.gpg
+    state: present
   tags: gocollect
 
 - name: Add GoCollect apt repository from osso-ppa
   apt_repository:
     repo: >
       deb http://ppa.osso.nl/{{ ansible_distribution|lower }}
-      {{ ansible_lsb.codename|lower }} osso
+      {{ ansible_lsb.codename|lower }} gocollect
     filename: osso-ppa
     state: present
     update_cache: no
@@ -31,26 +33,35 @@
   apt_repository:
     repo: >
       deb-src http://ppa.osso.nl/{{ ansible_distribution|lower }}
-      {{ ansible_lsb.codename|lower }} osso
+      {{ ansible_lsb.codename|lower }} gocollect
     filename: osso-ppa
     state: present
   tags: gocollect
 
 - name: Install GoCollect packages
-  apt: name={{ item }} state=latest update_cache=yes cache_valid_time=3600
+  apt:
+    name: {{ item }}
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   with_items:
     - gocollect
     - gocollect-osso
   tags: gocollect
 
 - name: Install gocollect-hardware if we are dealing with a physical server.
-  apt: >
-    name=gocollect-hardware state=latest update_cache=yes cache_valid_time=3600
+  apt:
+    name: gocollect-hardware
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   when: ansible_virtualization_role=='host'
   tags: gocollect
 
 - name: make sure gocollect config is sane and up to date
-  template: src=gocollect.conf.j2 dest=/etc/gocollect.conf
+  template:
+    src: gocollect.conf.j2
+    dest: /etc/gocollect.conf
   notify:
   - restart gocollect
   tags: gocollect
