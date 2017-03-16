@@ -28,6 +28,7 @@ None.
 Example Playbook
 ----------------
 
+```
 - hosts: all
   vars:
     gocollect:
@@ -35,7 +36,7 @@ Example Playbook
       push_url: https://overridden.gocollect.example.com/client/v1/update/{regid}/{_collector}/
   roles:
     - ossobv.gocollect-playbook
-
+```
 
 License
 -------
