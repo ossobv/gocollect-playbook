@@ -1,19 +1,22 @@
-# vim: set ts=4 sw=4 sts=4 et ai tw=79 syn=sh:
-#
+#########################################
+# This file is maintained by Ansible!   #
+#########################################
+
 # GoCollect configuration.
-# ####################################################################
-# # !IMPORTANT!                                                      #
-# #                                                                  #
-# # This file is maintained by Ansible! Local modification can (and  #
-# # probably will) be undone.                                        #
-# #                                                                  #
-# # If changes are needed, contact your local ansiblejedi            #
-# ####################################################################
+
+# api_key: Optional API key which is passed along during registration
+#   and updates. This key is required for some collector servers to map
+#   your server to a specific company.
+{% if gocollect.api_key != None %} 
+api_key = {{ gocollect.api_key }}
+{% else %}
+#api_key = ABCDEF_THIS_IS_A_KEY
+{% endif %}
 
 # register_url: Specify URL where to register this GoCollect instance.
 #   You can skip the register-step by prepopulating
 #   /var/lib/gocollect/core.id.regid with a valid key.
-register_url = {{ gocollect_register_url|default('https://gocollect.osso.io/client/v1/register/') }}
+register_url = {{ gocollect.register_url }}
 
 # push_url: Specify URL where to post the data.
 #   The {ip4} and {fqdn} parameters are taken from the core.id script.
@@ -24,7 +27,7 @@ register_url = {{ gocollect_register_url|default('https://gocollect.osso.io/clie
 #   For now, we've decided to do without auth on the collector server.
 #   We won't do automatic billing based on the imported values and the
 #   source IP is used as an additional identifier.
-push_url = {{ gocollect_push_url|default('https://gocollect.osso.io/client/v1/update/{regid}/{_collector}/') }}
+push_url = {{ gocollect.push_url }}
 
 # collectors_path: Specify one or more paths where the collectors can
 #   be found.
@@ -32,4 +35,9 @@ push_url = {{ gocollect_push_url|default('https://gocollect.osso.io/client/v1/up
 #   add new collectors or override collectors that behave differently on
 #   your system. (The *last* path is leading.)
 collectors_path = /usr/share/gocollect/collectors
-collectors_path = /usr/local/share/gocollect/collectors
+#collectors_path = /usr/local/share/gocollect/collectors
+
+# Optionally include these files if available. At the moment, globbing
+# is not supported.
+include = /etc/gocollect.conf.local
+#include = /usr/local/etc/gocollect.conf.local
