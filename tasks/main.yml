@@ -1,5 +1,5 @@
 ---
-# vim: set ts=2 sw=2 sts=2 et ai tw=79:
+# vim: set ts=2 sw=2 sts=2 et ai: 
 # tasks file for gocollect 
 #
 # GoCollect collects various pieces of system info and publishes them to a 
@@ -13,55 +13,42 @@
 #
 # https://github.com/ossobv/gocollect
 
-- name: Add GoCollect apt repository key for osso-ppa
+- name: add GoCollect apt repository key for osso-ppa
   apt_key:
     url: https://ppa.osso.nl/support+ppa@osso.nl.gpg
     state: present
   tags: gocollect
 
-- name: Add GoCollect apt repository from osso-ppa
+- name: add GoCollect apt repository from osso-ppa
   apt_repository:
-    repo: >
-      deb http://ppa.osso.nl/{{ ansible_distribution|lower }}
-      {{ ansible_lsb.codename|lower }} gocollect
+    repo: "{{ item }}"
     filename: osso-ppa
     state: present
     update_cache: no
   tags: gocollect
+  with_items:
+    - "deb http://ppa.osso.nl/{{ ansible_distribution|lower }} {{ ansible_lsb.codename|lower }} gocollect"
+    - "deb-src http://ppa.osso.nl/{{ ansible_distribution|lower }} {{ ansible_lsb.codename|lower }} gocollect"
 
-- name: Add GoCollect apt src repository from osso-ppa
-  apt_repository:
-    repo: >
-      deb-src http://ppa.osso.nl/{{ ansible_distribution|lower }}
-      {{ ansible_lsb.codename|lower }} gocollect
-    filename: osso-ppa
-    state: present
-  tags: gocollect
-
-- name: Install GoCollect packages
+- name: install GoCollect package
   apt:
-    name: {{ item }}
+    name: gocollect
     state: latest
     update_cache: yes
-    cache_valid_time: 3600
-  with_items:
-    - gocollect
-    - gocollect-osso
   tags: gocollect
 
-- name: Install gocollect-hardware if we are dealing with a physical server.
+- name: install gocollect-hardware if we are dealing with a physical server.
   apt:
     name: gocollect-hardware
     state: latest
     update_cache: yes
-    cache_valid_time: 3600
   when: ansible_virtualization_role=='host'
   tags: gocollect
 
-- name: make sure gocollect config is sane and up to date
+- name: make sure gocollect config is uptodate
   template:
     src: gocollect.conf.j2
     dest: /etc/gocollect.conf
   notify:
-  - restart gocollect
+    - restart gocollect
   tags: gocollect

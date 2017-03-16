@@ -1,4 +1,4 @@
 gocollect:
   api_key:
-  push_url: https://example.gocollect.com/client/v1/register/
-  register_url: https://gocollect.example.com/client/v1/update/{regid}/{_collector}/
+  register_url: https://gocollect.example.com/client/v1/register/
+  push_url: https://gocollect.example.com/client/v1/update/{regid}/{_collector}/
