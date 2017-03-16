@@ -1,17 +1,4 @@
----
 # vim: set ts=2 sw=2 sts=2 et ai: 
-# tasks file for gocollect 
-#
-# GoCollect collects various pieces of system info and publishes them to a 
-# central server (maintained by OSSO).
-#
-# The intent of GoCollect is to create a map of all the servers with slow and
-# never changing data items. Where you may use Zabbix for semi-realtime
-# monitoring of integer values like current CPU usage, you use GoCollect to 
-# collect values like hard drive serial numbers, IPMI IP-addresses and versions
-# of installed OS packages.
-#
-# https://github.com/ossobv/gocollect
 
 - name: add GoCollect apt repository key for osso-ppa
   apt_key:
