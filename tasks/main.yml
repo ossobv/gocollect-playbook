@@ -29,7 +29,7 @@
     name: gocollect-hardware
     state: latest
     update_cache: yes
-  when: ansible_virtualization_role=='host'
+  when: gocollect.install_hardware and ansible_virtualization_role=='host'
   tags: gocollect
 
 - name: make sure gocollect config is uptodate
