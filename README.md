@@ -1,8 +1,14 @@
 gocollect-playbook
 =========
 
-Ansible playbook which installs GoCollect, a tool which collects system info and publishes it to a central server.
+Ansible playbook which installs GoCollect, a tool which collects system info
+and publishes it to a central server.
 https://github.com/ossobv/gocollect
+
+Starting from GoCollect version 0.6.0, GoCollect now supports core.meta
+config files in the form of yaml. Ansible will copy over all template configs
+in templates/core.meta, so make sure you add any custom core.meta config there!
+For more info about the core.meta config check the GoCollect README.
 
 Requirements
 ------------
@@ -12,16 +18,16 @@ None.
 Role Variables
 --------------
 
-Please configure the following variables:
+The following variables can be configured:
+- `gocollect.api_key`
+- `gocollect.register_url`
+- `gocollect.push_url`
+- `gocollect.collectors_path`
+- `gocollect.include_path`
 
-- gocollect.api_key (not required)
-- gocollect.register_url
-- gocollect.push_url
-- gocollect.install_hardware (see reason below)
-
-If these are not set, the playbook will use the defaults!
-
-gocollect.install_hardware has been added because Ansible doesn't always correctly return that a target machine is actually a VM. This results in VM's getting the gocollect-hardware package aswell. For now this variable is added (default is true) so that we can make sure that certain groups of hosts don't receive the package.
+Note: previous version included `gocollect.install_hardware` because it wasn't
+able to detect openstack based servers as guests. This seems to no longer be
+the case and therefore the variable has been removed.
 
 Dependencies
 ------------
