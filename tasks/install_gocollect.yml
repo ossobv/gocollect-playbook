@@ -1,0 +1,42 @@
+# vim: set ts=2 sw=2 sts=2 et ai:
+
+- name: add gocollect apt repository key for osso-ppa
+  apt_key:
+    url: https://ppa.osso.nl/support+ppa@osso.nl.gpg
+    state: present
+  tags: gocollect
+
+- name: add GoCollect apt repository from osso-ppa
+  apt_repository:
+    repo: "{{ item }}"
+    filename: osso-ppa
+    state: present
+    update_cache: no
+  tags: gocollect
+  with_items:
+    - "deb http://ppa.osso.nl/{{ ansible_distribution|lower }} {{ ansible_lsb.codename|lower }} gocollect"
+    - "deb-src http://ppa.osso.nl/{{ ansible_distribution|lower }} {{ ansible_lsb.codename|lower }} gocollect"
+
+- name: install gocollect package
+  apt:
+    name: gocollect
+    state: latest
+    update_cache: yes
+    dpkg_options: 'force-confnew'
+  tags: gocollect
+
+- name: install gocollect-hardware if we are dealing with a physical server.
+  apt:
+    name: gocollect-hardware
+    state: latest
+    dpkg_options: 'force-confnew'
+  when: ansible_virtualization_role == 'host'
+  tags: gocollect
+
+- name: make sure gocollect config is uptodate
+  template:
+    src: gocollect.conf.j2
+    dest: /etc/gocollect.conf
+  notify:
+    - restart gocollect
+  tags: gocollect

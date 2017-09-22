@@ -1,0 +1,21 @@
+# vim: set ts=2 sw=2 sts=2 et ai:
+
+- name: make sure gocollect directories are present
+  file:
+    name: /etc/gocollect/core.meta
+    state: directory
+    owner: root
+    group: root
+  when: enable_metadata is defined and enable_metadata
+
+- name: add additional metadata configs if present
+  template:
+    src: "{{ item }}"
+    dest: /etc/gocollect/core.meta/
+    owner: root
+    mode: 0644
+  with_fileglob:
+    - "templates/core.meta/*"
+  notify:
+    - restart gocollect
+  when: enable_metadata is defined and enable_metadata

@@ -1,0 +1,19 @@
+# GoCollect backup config for {{ ansible_hostname }}
+
+paths:
+  root: /
+  include:
+    - data
+    - etc
+    - home
+    - opt
+    - root
+    - srv
+    - usr/local/bin
+    - var/backups
+    - "var/lib/dpkg/status*"
+    - "var/lib/psdiff.db*"
+    - var/spool/cron
+    - var/www
+  exclude: []
+notes: ""
