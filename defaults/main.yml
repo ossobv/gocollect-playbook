@@ -1,5 +1,7 @@
 gocollect:
   api_key:
-  register_url: https://gocollect.example.com/client/v1/register/
-  push_url: https://gocollect.example.com/client/v1/update/{regid}/{_collector}/
-  install_hardware: true
+  register_url:
+  push_url:
+  collectors_path:
+  include_path:
+
